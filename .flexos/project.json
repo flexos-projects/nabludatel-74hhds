@@ -1,9 +1,23 @@
 {
-  "name": "{{project_name}}",
-  "slug": "{{project_slug}}",
-  "color": "{{theme_color}}",
-  "ownerId": null,
-  "ownerEmail": null,
-  "createdAt": "{{created_at}}",
-  "version": "0.1.0"
+  "name": "Nabludatel",
+  "slug": "nabludatel",
+  "tagline": "Automated forensic monitoring for democratic elections.",
+  "description": "An autonomous pipeline that downloads, transcribes, and forensically analyzes thousands of hours of election counting video in real-time, surfacing anomalies before the final protocols are signed.",
+  "seedId": "ujQshLV2hWwJAUtsYswU",
+  "brand": {
+    "color": "#3b82f6",
+    "personality": [
+      "vigilant",
+      "forensic",
+      "unrelenting",
+      "clinical"
+    ],
+    "values": [
+      "radical transparency",
+      "protection of the vulnerable",
+      "data over narrative"
+    ]
+  },
+  "createdAt": "2026-04-20T11:46:05.338Z",
+  "version": "2.0"
 }
