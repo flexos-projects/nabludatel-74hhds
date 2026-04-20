@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nabludatel | Command Center</title>
+  <link rel="stylesheet" href="../shared/tokens.css">
+  <link rel="stylesheet" href="../shared/components.css">
+  <style>
+    body {
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      font-family: var(--font-body);
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+      margin: 0;
+    }
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 2rem;
+      overflow-y: auto;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+    .feed {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <aside class="sidebar telemetry-panel" style="width: 280px; background-color: var(--color-surface); border-right: 1px solid var(--color-border); padding: 1.5rem; display: flex; flex-direction: column; gap: 2rem;">
+    <div class="brand" style="font-size: 1.25rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; display: flex; align-items: center; justify-content: space-between;">
+      Nabludatel
+      <div class="pulse-indicator" style="width: 8px; height: 8px; background-color: var(--color-danger); border-radius: 50%; animation: pulse 2s infinite;"></div>
+    </div>
+    <nav style="display: flex; flex-direction: column; gap: 1rem;">
+      <a href="dashboard-v2.html" class="btn-primary" style="text-decoration: none; text-align: center;">Dashboard</a>
+      <a href="coverage-v1.html" class="btn-secondary" style="text-decoration: none; text-align: center;">Coverage</a>
+    </nav>
+    <div class="metrics-grid" style="display: flex; flex-direction: column; gap: 1rem;">
+      <div class="stat-block" style="background: var(--color-bg); border: 1px solid var(--color-border); padding: 1rem; border-radius: 0.25rem;">
+        <div class="metric-label" style="font-size: 0.75rem; color: var(--color-text-muted); text-transform: uppercase; margin-bottom: 0.5rem;">Sections Queued</div>
+        <div class="metric-value mono-text" id="stat-queued" style="font-size: 1.5rem; font-weight: 600;">...</div>
+      </div>
+      <div class="stat-block" style="background: var(--color-bg); border: 1px solid var(--color-border); padding: 1rem; border-radius: 0.25rem;">
+        <div class="metric-label" style="font-size: 0.75rem; color: var(--color-text-muted); text-transform: uppercase; margin-bottom: 0.5rem;">Processed</div>
+        <div class="metric-value mono-text" id="stat-processed" style="font-size: 1.5rem; font-weight: 600;">...</div>
+      </div>
+      <div class="stat-block" style="background: var(--color-bg); border: 1px solid var(--color-border); padding: 1rem; border-radius: 0.25rem;">
+        <div class="metric-label" style="font-size: 0.75rem; color: var(--color-text-muted); text-transform: uppercase; margin-bottom: 0.5rem;">Critical Alerts</div>
+        <div class="metric-value mono-text" id="stat-alerts" style="font-size: 1.5rem; font-weight: 600; color: var(--color-danger)">...</div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="header">
+      <h2>Anomaly Feed</h2>
+      <button class="btn-secondary" onclick="document.documentElement.dataset.theme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'">Toggle Theme</button>
+    </header>
+
+    <div class="feed" id="anomaly-feed">
+      <!-- Rendered via JS -->
+    </div>
+  </main>
+
+  <script>
+    fetch('../mock-data.json')
+      .then(res => res.json())
+      .then(data => {
+        // Update stats
+        document.getElementById('stat-queued').textContent = data.stats.sections_queued.toLocaleString();
+        document.getElementById('stat-processed').textContent = data.stats.processed.toLocaleString();
+        document.getElementById('stat-alerts').textContent = data.stats.critical_alerts.toLocaleString();
+
+        // Render feed
+        const feed = document.getElementById('anomaly-feed');
+        const html = data.anomalies.map(a => {
+          const borderColor = a.severity === 'critical' ? 'var(--color-danger)' : 'var(--color-warning)';
+          return `
+            <div class="anomaly-card" style="background: var(--color-surface); border: 1px solid var(--color-border); border-left: 4px solid ${borderColor}; border-radius: 0.25rem; padding: 1.5rem;">
+              <div class="alert-header" style="display: flex; justify-content: space-between; margin-bottom: 1rem; font-family: var(--font-mono); font-size: 0.875rem; color: var(--color-text-muted);">
+                <span>SEC: ${a.section_id} (${a.settlement})</span>
+                <span>@ ${a.timestamp}</span>
+              </div>
+              <div class="alert-title" style="font-size: 1.125rem; font-weight: 600; margin-bottom: 0.5rem;">${a.category}</div>
+              <div class="alert-body" style="font-size: 0.875rem; line-height: 1.5; margin-bottom: 1.5rem; color: var(--color-text-muted);">
+                ${a.ai_reasoning}
+              </div>
+              <div class="transcript-snippet mono-text" style="background: var(--color-bg); padding: 1rem; font-size: 0.75rem; border-radius: 0.25rem; border: 1px solid var(--color-border); margin-bottom: 1.5rem;">
+                ${a.trigger_quote}
+              </div>
+              <div class="actions" style="display: flex; gap: 1rem;">
+                <button class="btn-primary" onclick="window.location.href='section-detail-v1.html?id=${a.section_id}'">View Details</button>
+                <button class="btn-secondary">Mark Reviewed</button>
+              </div>
+            </div>
+          `;
+        }).join('');
+        feed.innerHTML = html;
+      });
+  </script>
+</body>
+</html>
