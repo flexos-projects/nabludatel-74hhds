@@ -8,7 +8,7 @@ description: "Section dashboard — sitemap, versions, deploy config"
 relatesTo:
   - docs/003-pages.md
   - docs/005-flows.md
-createdAt: "2026-04-20T12:00:00Z"
+createdAt: "{{created_at}}"
 ---
 
 # Prototypes
@@ -45,7 +45,7 @@ When asked to deploy: run the html-rollup skill, then update the `deploy-config`
     {
       "path": "/section/:id",
       "pageSpec": "specs/002-page-overlay_section-detail.md",
-      "label": "Section Detail",
+      "label": "Section Detail Overlay",
       "current": "section-detail-v1.html",
       "versions": ["section-detail-v1.html"]
     },
@@ -55,6 +55,13 @@ When asked to deploy: run the html-rollup skill, then update the `deploy-config`
       "label": "Coverage Matrix",
       "current": "coverage-v1.html",
       "versions": ["coverage-v1.html"]
+    },
+    {
+      "path": "/landing",
+      "pageSpec": "specs/010-page-route_landing.md",
+      "label": "Public Landing Page",
+      "current": "landing-v1.html",
+      "versions": ["landing-v1.html"]
     }
   ]
 }
@@ -64,13 +71,16 @@ When asked to deploy: run the html-rollup skill, then update the `deploy-config`
 {
   "dashboard": [
     { "version": 1, "file": "dashboard-v1.html", "createdAt": "2026-04-20T12:00:00Z" },
-    { "version": 2, "file": "dashboard-v2.html", "createdAt": "2026-04-20T12:05:00Z", "current": true }
+    { "version": 2, "file": "dashboard-v2.html", "createdAt": "2026-04-20T13:00:00Z", "current": true }
   ],
   "section-detail": [
     { "version": 1, "file": "section-detail-v1.html", "createdAt": "2026-04-20T12:00:00Z", "current": true }
   ],
   "coverage": [
     { "version": 1, "file": "coverage-v1.html", "createdAt": "2026-04-20T12:00:00Z", "current": true }
+  ],
+  "landing": [
+    { "version": 1, "file": "landing-v1.html", "createdAt": "2026-04-20T12:00:00Z", "current": true }
   ]
 }
 </flex_block>
