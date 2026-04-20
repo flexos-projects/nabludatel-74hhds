@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coming Soon — Built with FlexOS</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐱</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --c-bg: #0F1419;
+  --c-s: #171f26;
+  --c-sr: #1c252e;
+  --c-b: #1e2a33;
+  --c-b2: #2a3844;
+  --c-gr: #34d399;
+  --c-gr-lo: rgba(52,211,153,.08);
+  --c-gr-gl: rgba(52,211,153,.20);
+  --c-tx: #eceff4;
+  --c-tx2: #8b99a8;
+  --c-tx3: #4d5f6e;
+  --f-sans: 'Inter', -apple-system, system-ui, sans-serif;
+  --f-mono: 'Geist Mono', 'JetBrains Mono', ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  background: var(--c-bg);
+  color: var(--c-tx);
+  font-family: var(--f-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  overflow: hidden;
+}
+
+/* Background glow */
+body::before {
+  content: '';
+  position: fixed;
+  top: -40%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(circle, rgba(52,211,153,.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Grid pattern */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(52,211,153,.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(52,211,153,.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
+  -webkit-mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  max-width: 520px;
+}
+
+/* Flexi avatar */
+.avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--c-gr-lo);
+  border: 2px solid var(--c-gr);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  margin: 0 auto 32px;
+  box-shadow: 0 0 32px var(--c-gr-gl);
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Status badge */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  background: var(--c-s);
+  border: 1px solid var(--c-b);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--c-gr);
+  margin-bottom: 24px;
+}
+
+.badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--c-gr);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: .4; }
+  50% { opacity: 1; }
+}
+
+h1 {
+  font-size: clamp(32px, 6vw, 48px);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+
+h1 span {
+  background: linear-gradient(135deg, var(--c-gr), #60a5fa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subtitle {
+  font-size: 16px;
+  color: var(--c-tx2);
+  line-height: 1.7;
+  margin-bottom: 40px;
+}
+
+/* Progress steps */
+.steps {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: var(--c-s);
+  border: 1px solid var(--c-b);
+  border-radius: 10px;
+  font-size: 12px;
+  color: var(--c-tx2);
+}
+
+.step-icon {
+  font-size: 14px;
+}
+
+.step.done .step-icon { color: var(--c-gr); }
+.step.active { border-color: var(--c-b2); color: var(--c-tx); }
+
+/* Powered by */
+.powered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--c-tx3);
+  margin-top: 20px;
+}
+
+.powered a {
+  color: var(--c-gr);
+  text-decoration: none;
+  font-weight: 600;
+}
+.powered a:hover {
+  text-decoration: underline;
+}
+
+/* Floating particles */
+.particles {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--c-gr);
+  border-radius: 50%;
+  opacity: 0;
+  animation: drift 8s ease-in-out infinite;
+}
+
+.particle:nth-child(1) { left: 15%; top: 20%; animation-delay: 0s; }
+.particle:nth-child(2) { left: 75%; top: 30%; animation-delay: 2s; }
+.particle:nth-child(3) { left: 40%; top: 70%; animation-delay: 4s; }
+.particle:nth-child(4) { left: 85%; top: 60%; animation-delay: 1s; }
+.particle:nth-child(5) { left: 25%; top: 80%; animation-delay: 3s; }
+.particle:nth-child(6) { left: 60%; top: 15%; animation-delay: 5s; }
+
+@keyframes drift {
+  0% { opacity: 0; transform: translateY(0) scale(0.5); }
+  20% { opacity: 0.3; }
+  80% { opacity: 0.3; }
+  100% { opacity: 0; transform: translateY(-40px) scale(1); }
+}
+
+@media (max-width: 480px) {
+  .steps { flex-direction: column; align-items: center; }
+  .avatar { width: 64px; height: 64px; font-size: 32px; margin-bottom: 24px; }
+}
+</style>
+</head>
+<body>
+
+<div class="particles">
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+</div>
+
+<div class="container">
+  <div class="avatar">🐱</div>
+
+  <div class="badge">
+    <span class="badge-dot"></span>
+    Building with AI
+  </div>
+
+  <h1>Something <span>amazing</span> is coming</h1>
+
+  <p class="subtitle">
+    This project is being built by Flexi, your AI co-founder.
+    Specs, design, and code — all generated from a single idea.
+  </p>
+
+  <div class="steps">
+    <div class="step done">
+      <span class="step-icon">✓</span>
+      Repository
+    </div>
+    <div class="step done">
+      <span class="step-icon">✓</span>
+      Hosting
+    </div>
+    <div class="step active">
+      <span class="step-icon">◎</span>
+      Building
+    </div>
+    <div class="step">
+      <span class="step-icon">○</span>
+      Launch
+    </div>
+  </div>
+
+  <div class="powered">
+    <span>🐱</span>
+    Built with <a href="https://flexos.dev" target="_blank">FlexOS</a>
+  </div>
+</div>
+
+</body>
+</html>

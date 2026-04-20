@@ -1,0 +1,9 @@
+{
+  "name": "{{project_name}}",
+  "slug": "{{project_slug}}",
+  "color": "{{theme_color}}",
+  "ownerId": null,
+  "ownerEmail": null,
+  "createdAt": "{{created_at}}",
+  "version": "0.1.0"
+}
