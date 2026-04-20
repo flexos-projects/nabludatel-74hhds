@@ -22,17 +22,30 @@ Last regenerated: 2026-04-20T12:00:00Z
 # Pages
 
 ## Page Inventory
+- `/landing` — Public Landing Page (Marketing)
 - `/` — Command Dashboard (App)
 - `/section/:id` — Section Detail (App, Overlay)
 - `/coverage` — Coverage Matrix (App)
-
-*(Note: There are no public marketing pages, auth pages, or billing pages. This is a local utility.)*
 
 ---
 
 ## Page Specifications
 
-### 1. Command Dashboard (`/`)
+### 1. Public Landing Page (`/landing`)
+- **Purpose:** Distribute the open-source tool and explain its forensic value proposition.
+- **Audience & arrival context:** Investigative journalists, civil society watchdogs, and election observers looking for a tool to monitor the upcoming election.
+- **UX vision:** Bloomberg Terminal meets Palantir. Clinical, objective, unbribable. No marketing fluff.
+- **Sections:**
+  1. **Hero:** High-impact headline ("Transparency without attention is useless"), subheadline, and a visual of the terminal output. CTA to download the CLI or view source.
+  2. **The Reality (Problem):** Stark text block highlighting the impossibility of manually watching 40,000 hours of footage.
+  3. **Feature Grid:** 4 core features (Village-First Queue, Local Whisper Transcription, Headless Forensic Analysis, Ephemeral Storage) explained technically.
+  4. **Forensic Evidence (Social Proof):** Testimonials from hypothetical beta-tester journalists and watchdogs.
+  5. **FAQ:** Technical questions answered directly (hardware requirements, cost, internet dropouts).
+  6. **Final CTA:** "The machine never sleeps. Start monitoring." with a massive primary button.
+- **Key interactions:** Clicking "Download CLI" or "View Source".
+- **Conversion/action goal:** Get the user to download the CLI or clone the repository.
+
+### 2. Command Dashboard (`/`)
 - **Purpose:** The primary monitoring station. Provides a live feed of anomalies and system health.
 - **Audience & arrival context:** A journalist or observer sitting in a dark room at 3:00 AM, drinking coffee, waiting for the system to find fraud. They are focused, tired, and need high-contrast, instantly readable information.
 - **UX vision:** Bloomberg Terminal meets air traffic control. Dense, dark, monospace-heavy. No wasted space. The UI should feel urgent but completely objective.
@@ -49,7 +62,7 @@ Last regenerated: 2026-04-20T12:00:00Z
   - Error: If the SQLite read fails, show a stark red banner: "DATABASE CONNECTION LOST."
 - **Conversion/action goal:** Get the user to click on a critical alert to verify the footage.
 
-### 2. Section Detail (`/section/:id`)
+### 3. Section Detail (`/section/:id`)
 - **Purpose:** Provide the full context needed to verify a single anomaly without losing sight of the main feed.
 - **Audience & arrival context:** The user just saw a shocking AI alert and needs to know if it's real or a hallucination. They are skeptical and need evidence.
 - **UX vision:** A slide-over panel (drawer) that covers the right half of the screen. It feels like opening a forensic dossier.
@@ -62,7 +75,7 @@ Last regenerated: 2026-04-20T12:00:00Z
 - **Empty/loading/error states:** Loading skeleton while fetching the full transcript from SQLite.
 - **Conversion/action goal:** User clicks to watch the source video.
 
-### 3. Coverage Matrix (`/coverage`)
+### 4. Coverage Matrix (`/coverage`)
 - **Purpose:** A macro-level view of the entire country's processing status.
 - **Audience & arrival context:** The user wants to know "Are we done with Plovdiv yet?" or "Where are the most alerts coming from?"
 - **UX vision:** A dense, sortable data table. Clinical and exhaustive.
@@ -77,6 +90,9 @@ Last regenerated: 2026-04-20T12:00:00Z
 
 ## Navigation Map
 ```
+Public Landing Page (/landing)
+ └── Download CLI / View Source
+
 Command Dashboard (/)
  ├── Telemetry Sidebar
  ├── Anomaly Feed

@@ -3,13 +3,14 @@ id: design-tokens
 title: "Design Tokens"
 type: design
 status: active
-sequence: 101
-createdAt: "2026-04-20T12:00:00Z"
+sequence: 25
+createdAt: "2026-04-20T11:46:23.871Z"
+updatedAt: "2026-04-20T12:00:00Z"
 ---
 
 # Design Tokens
 
-<flex_block type="tokens" id="blk-001" name="colors-dark">
+<flex_block type="tokens" id="blk-007" name="colors-dark">
 {
   "category": "colors",
   "mode": "dark",
@@ -28,7 +29,7 @@ createdAt: "2026-04-20T12:00:00Z"
 }
 </flex_block>
 
-<flex_block type="tokens" id="blk-002" name="colors-light">
+<flex_block type="tokens" id="blk-008" name="colors-light">
 {
   "category": "colors",
   "mode": "light",
@@ -47,7 +48,7 @@ createdAt: "2026-04-20T12:00:00Z"
 }
 </flex_block>
 
-<flex_block type="tokens" id="blk-003" name="typography">
+<flex_block type="tokens" id="blk-009" name="typography">
 {
   "category": "typography",
   "tokens": {
@@ -58,7 +59,7 @@ createdAt: "2026-04-20T12:00:00Z"
 }
 </flex_block>
 
-<flex_block type="tokens" id="blk-004" name="spacing">
+<flex_block type="tokens" id="blk-010" name="spacing">
 {
   "category": "spacing",
   "tokens": {
@@ -67,12 +68,15 @@ createdAt: "2026-04-20T12:00:00Z"
     "--space-3": "0.75rem",
     "--space-4": "1rem",
     "--space-6": "1.5rem",
-    "--space-8": "2rem"
+    "--space-8": "2rem",
+    "--space-12": "3rem",
+    "--space-16": "4rem",
+    "--space-24": "6rem"
   }
 }
 </flex_block>
 
-<flex_block type="tokens" id="blk-005" name="radii">
+<flex_block type="tokens" id="blk-011" name="radii">
 {
   "category": "radii",
   "tokens": {
@@ -84,7 +88,7 @@ createdAt: "2026-04-20T12:00:00Z"
 }
 </flex_block>
 
-<flex_block type="tokens" id="blk-006" name="shadows">
+<flex_block type="tokens" id="blk-012" name="shadows">
 {
   "category": "shadows",
   "tokens": {
@@ -95,7 +99,7 @@ createdAt: "2026-04-20T12:00:00Z"
 }
 </flex_block>
 
-<flex_block type="tokens" id="blk-007" name="transitions">
+<flex_block type="tokens" id="blk-013" name="transitions">
 {
   "category": "transitions",
   "tokens": {

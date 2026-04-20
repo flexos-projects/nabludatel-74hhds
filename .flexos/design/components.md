@@ -1,49 +1,50 @@
-# Components
+---
+id: design-components
+title: "Design Components"
+type: design
+status: active
+createdAt: "2026-04-20T12:00:00Z"
+---
 
-<flex_block type="component" id="blk-008" name="anomaly-card">
-<div class="anomaly-card">
-  <div class="alert-header">
-    <span class="mono-text">SEC: 152400019</span>
-    <span class="mono-text">@ 01:45:22</span>
-  </div>
-  <div class="alert-title">Intimidation Detected</div>
-  <div class="alert-body">Claude detected hostile language.</div>
-  <div class="transcript-snippet mono-text">
-    [01:45:22] Speaker B: Put the phone away or I will break it.
-  </div>
+# Design Components
+
+<flex_block type="component" id="blk-comp-001" name="btn-primary">
+<button class="btn btn-primary">Action</button>
+</flex_block>
+
+<flex_block type="component" id="blk-comp-002" name="btn-secondary">
+<button class="btn btn-secondary">Secondary</button>
+</flex_block>
+
+<flex_block type="component" id="blk-comp-003" name="nav-brand">
+<div class="nav-brand">Nabludatel</div>
+</flex_block>
+
+<flex_block type="component" id="blk-comp-004" name="nav-links">
+<nav class="nav-links">
+  <a href="#">Documentation</a>
+  <a href="#">GitHub</a>
+</nav>
+</flex_block>
+
+<flex_block type="component" id="blk-comp-005" name="feature-card">
+<div class="feature-card">
+  <div class="feature-icon">❖</div>
+  <h3 class="feature-title">Feature Title</h3>
+  <p class="feature-desc">Description of the feature goes here.</p>
 </div>
 </flex_block>
 
-<flex_block type="component" id="blk-009" name="telemetry-panel">
-<aside class="sidebar telemetry-panel">
-  <div class="brand">
-    Nabludatel
-    <div class="pulse-indicator"></div>
-  </div>
-  <div class="metrics-grid">
-    <div class="stat-block">
-      <div class="metric-label">Sections Queued</div>
-      <div class="metric-value mono-text">12,450</div>
-    </div>
-  </div>
-</aside>
+<flex_block type="component" id="blk-comp-006" name="quote-block">
+<blockquote class="quote-block">
+  <p class="quote-text">"This is an incredible tool that saved us weeks of manual review."</p>
+  <footer class="quote-author">— Lead Investigator</footer>
+</blockquote>
 </flex_block>
 
-<flex_block type="component" id="blk-010" name="slide-over">
-<div class="slide-over dossier-panel">
-  <div class="dossier-header">
-    <span class="mono-heading">SEC: 152400019</span>
-    <span class="tag-severity">Critical</span>
-  </div>
-  <div class="reasoning-block text-sans">
-    AI Reasoning goes here.
-  </div>
-  <div class="transcript-context mono-block">
-    <span class="highlight-trigger">Trigger quote</span>
-  </div>
-  <div class="action-bar-sticky">
-    <button class="btn-primary btn-massive">Watch Video</button>
-    <button class="btn-secondary">Mark as False Positive</button>
-  </div>
-</div>
+<flex_block type="component" id="blk-comp-007" name="faq-accordion">
+<details class="faq-accordion">
+  <summary class="faq-question">What is the question?</summary>
+  <div class="faq-answer">This is the answer to the question.</div>
+</details>
 </flex_block>

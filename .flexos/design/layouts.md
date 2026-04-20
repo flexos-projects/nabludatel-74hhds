@@ -1,20 +1,41 @@
-# Layouts
+---
+id: design-layouts
+title: "Design Layouts"
+type: design
+status: active
+createdAt: "2026-04-20T12:00:00Z"
+---
 
-<flex_block type="layout" id="blk-011" name="app-shell">
-<div class="app-shell theme-dark">
-  <aside class="sidebar telemetry-panel">
-    <!-- Telemetry Sidebar -->
-  </aside>
-  <main class="fluid-width feed-container">
-    <!-- Anomaly Feed or Coverage Matrix -->
+# Design Layouts
+
+<flex_block type="layout" id="blk-lay-001" name="landing-full-width">
+<div class="landing-shell theme-dark">
+  <header class="landing-nav">
+    <!-- nav-brand -->
+    <!-- nav-links -->
+  </header>
+  <main class="landing-content">
+    <section class="hero-section">
+      <!-- hero content -->
+    </section>
+    <section class="problem-section">
+      <!-- problem content -->
+    </section>
+    <section class="feature-grid">
+      <!-- feature cards -->
+    </section>
+    <section class="evidence-section">
+      <!-- quote blocks -->
+    </section>
+    <section class="faq-section">
+      <!-- faq accordions -->
+    </section>
+    <section class="cta-section">
+      <!-- final cta -->
+    </section>
   </main>
-</div>
-</flex_block>
-
-<flex_block type="layout" id="blk-012" name="overlay">
-<div class="overlay-container">
-  <div class="slide-over dossier-panel">
-    <!-- Section Detail -->
-  </div>
+  <footer class="landing-footer">
+    <!-- footer links -->
+  </footer>
 </div>
 </flex_block>
