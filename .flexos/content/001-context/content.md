@@ -5,11 +5,12 @@ type: content
 subtype: collection
 collectionType: freeform
 status: active
+sequence: 26
 description: "Catch-all knowledge base. Company info, team bios, brand voice, research notes — anything the AI should know."
-createdAt: "{{created_at}}"
+createdAt: "2026-04-20T11:46:05.338Z"
 ---
 
-<flex_block type="fields" id="blk-001" name="fields">
+<flex_block type="fields" id="blk-014" name="fields">
 [
   { "id": "title", "label": "Name", "type": "text", "required": true, "identity": true }
 ]

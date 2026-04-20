@@ -9,7 +9,7 @@ relatesTo:
   - docs/INDEX.md
   - design/INDEX.md
   - specs/INDEX.md
-createdAt: "{{created_at}}"
+createdAt: "2026-04-20T11:46:05.338Z"
 ---
 
 # Welcome

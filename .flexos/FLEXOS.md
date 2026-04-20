@@ -1,11 +1,11 @@
 ---
 id: project
-title: "{{project_name}}"
+title: "Nabludatel"
 type: project
 status: active
-createdAt: "{{created_at}}"
+createdAt: "2026-04-20T11:46:05.338Z"
 ---
 
-# {{project_name}}
+# Nabludatel
 
 A FlexOS project.
