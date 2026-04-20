@@ -1,3 +1,12 @@
+---
+id: design-tokens
+title: "Design Tokens"
+type: design
+status: active
+sequence: 101
+createdAt: "2026-04-20T12:00:00Z"
+---
+
 # Design Tokens
 
 <flex_block type="tokens" id="blk-001" name="colors-dark">

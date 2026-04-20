@@ -3,6 +3,7 @@ id: "001-alignment"
 title: "Vision & Alignment"
 type: "space"
 status: "active"
+sequence: 2
 priority: "now"
 purpose: "Defining the forensic threshold and mission-critical guardrails."
 starterMessage: "I am ready to be the watchdog that never sleeps. We need to set the clinical tone for the forensic reports so journalists trust the signal. What is the one specific violation that, if detected, must trigger a red alert instantly?"

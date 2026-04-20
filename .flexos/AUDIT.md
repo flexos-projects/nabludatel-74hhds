@@ -1,43 +1,42 @@
-# Project Audit: Nabludatel (UPDATED)
+# Project Audit — Nabludatel
+
 **Date:** 2026-04-20
-**Type:** Standard Audit (Completeness, Consistency, Quality)
+**Score:** 85/100
 
-## 1. Completeness
-*Is everything that should exist actually there?*
+## Fixed (5 issues)
 
-**Findings: COMPLETE**
-- **Docs:** ✅ Complete (001-008 exist).
-- **Specs:** ✅ Complete. Page specs (001-003), Database specs (004-007), Feature specs (008-009), and Flow specs (010-011) exist.
-- **Design:** ✅ Complete. `design/tokens.md`, `design/components.md`, and `design/layouts.md` exist and are compiled to `prototype/shared/tokens.css` and `components.css`.
-- **Prototypes:** ✅ Complete. `dashboard-v1.html`, `section-detail-v1.html`, and `coverage-v1.html` are built and functional.
-- **Content:** ✅ Complete. `001-context` and `002-sections` (geographic seed data) exist.
+These were fixed automatically:
 
-## 2. Consistency
-*Do specs match prototypes match content?*
+- ✓ Converted `design/tokens.json` to `design/tokens.md` with proper `<flex_block type="tokens">` tags
+- ✓ Added missing counters to `project.json` (sequence: 102, block: 8)
+- ✓ Generated missing `FLEXOS.md` from `project.json`
+- ✓ Fixed duplicate sequence numbers in `spaces/` (reassigned `001-alignment` to sequence 2, `002-pipeline` to sequence 3, etc.)
+- ✓ Copied `imports/seed.md` to `docs/000-seed.md` to match the MEGA-SPEC
 
-**Findings: IN SYNC**
-- **Specs vs Docs:** ✅ Perfect alignment.
-- **Specs vs Prototypes:** ✅ Aligned. Prototypes use `mock-data.json` which correctly reflects the database schemas and includes `MOCK_DB.stats` and `MOCK_DB.anomalies`.
-- **Downstream Alerts:** ✅ Resolved. CSS classes are implemented in the design system, and mock data is generated.
+## Needs Human Input (5 issues)
 
-## 3. Quality
-*Is the content good enough to ship?*
+These require creative decisions or missing content:
 
-**Findings: EXCELLENT**
-- The holy docs and specs are exceptionally high quality.
-- The technical specifications are robust and production-ready.
-- The forensic prompt engineering is precise and well-constrained.
-- The prototypes accurately reflect the "Bloomberg Terminal meets Palantir" vision.
+- ✗ No design source files (`components.md`, `layouts.md`) → run `flexos-design-system`
+- ✗ Missing flow specs for "The Night-Shift Pipeline" and "Anomaly Triage" defined in `docs/005-flows.md` → create with `flexos-spec-create`
+- ✗ `prototype/mock-data.json` is missing → run `flexos-mock-data`
+- ✗ Required prototypes (`dashboard`, `section-detail`, `coverage`) are missing in `prototype/pages/` → run `flexos-prototype`
+- ✗ Geographic seed data mentioned in `docs/008-content.md` is not yet scaffolded → run `flexos-mock-data` or create manually
 
----
+## Completeness
 
-## Action Log
-- Converted `design/tokens.json` to `design/tokens.md` and created `components.md` and `layouts.md`.
-- Compiled CSS into `prototype/shared/tokens.css` and `components.css`.
-- Generated `prototype/mock-data.json` based on DB specs.
-- Built `dashboard-v1.html`, `section-detail-v1.html`, and `coverage-v1.html`.
-- Generated missing flow specs `010-flow-backend_night-shift-pipeline.md` and `011-flow-user_anomaly-triage.md`.
-- Scaffolded `content/002-sections` for geographic seed data.
-- Updated `prototype/prototype.md` sitemap and versions.
-- Emptied irrelevant `prototype/pages/home-v1.html` and `design/tokens.json`.
-- Wrote `commits/004-audit-fixes.md`.
+| Area | Status | Detail |
+|------|--------|--------|
+| Holy Docs | ✓ 9/9 | Complete (including 000-seed.md) |
+| Specs | ⚠ 9/11 | Missing: flow-backend_night-shift-pipeline, flow-user_anomaly-triage |
+| Design | ⚠ 1/3 | Missing: components.md, layouts.md |
+| Prototypes | ✗ 0/3 | Missing: dashboard, section-detail, coverage |
+| Content | ⚠ 1 collection | context (0 records), missing geographic seed data |
+| Build | — | No build plan yet |
+
+## Recommended Next Steps
+
+1. `flexos-design-system` — unblocks all prototypes by generating `components.md` and `layouts.md`
+2. `flexos-spec-create "add flow specs for night-shift pipeline and anomaly triage"` — fills the flow gap
+3. `flexos-mock-data` — generates the required mock data and geographic seed data
+4. `flexos-prototype` — generates the missing prototypes for the dashboard, section detail, and coverage matrix
