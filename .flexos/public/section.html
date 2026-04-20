@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nabludatel | Section Detail</title>
+  <link rel="stylesheet" href="/shared/tokens.css">
+  <link rel="stylesheet" href="/shared/components.css">
+  <style>
+    body {
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      font-family: var(--font-body);
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .dossier-panel {
+      background-color: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      width: 600px;
+      max-width: 90%;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-lg);
+    }
+    .dossier-header {
+      padding: var(--space-4);
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .reasoning-block {
+      padding: var(--space-4);
+      background-color: var(--color-bg);
+      border-bottom: 1px solid var(--color-border);
+      font-size: 0.875rem;
+      color: var(--color-text-muted);
+    }
+    .transcript-context {
+      padding: var(--space-4);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      overflow-y: auto;
+      flex: 1;
+      white-space: pre-wrap;
+    }
+    .highlight-trigger {
+      background-color: var(--color-danger);
+      color: var(--color-bg);
+      padding: 0 4px;
+    }
+    .action-bar-sticky {
+      padding: var(--space-4);
+      border-top: 1px solid var(--color-border);
+      display: flex;
+      gap: var(--space-4);
+    }
+  </style>
+</head>
+<body>
+  <div class="dossier-panel">
+    <div class="dossier-header">
+      <span class="mono-heading" id="sec-id" style="font-family: var(--font-mono); font-weight: bold;">SEC: Loading...</span>
+      <span class="tag-severity" id="sec-severity" style="color: var(--color-danger); font-family: var(--font-mono); text-transform: uppercase;">...</span>
+    </div>
+    <div class="reasoning-block text-sans" id="sec-reasoning">
+      Loading reasoning...
+    </div>
+    <div class="transcript-context mono-block" id="sec-transcript">
+      Loading transcript...
+    </div>
+    <div class="action-bar-sticky">
+      <button class="btn-primary btn-massive" onclick="window.open('https://evideo.bg', '_blank')">Watch Video</button>
+      <button class="btn-secondary" onclick="window.location.href='/'">Back to Dashboard</button>
+    </div>
+  </div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get('id');
+
+    if (!id) {
+      document.getElementById('sec-id').textContent = 'Error: No ID provided';
+    } else {
+      fetch(\`/api/sections/\${id}\`)
+        .then(res => res.json())
+        .then(data => {
+          const { section, anomalies, transcript } = data;
+          
+          document.getElementById('sec-id').textContent = \`SEC: \${section.section_id} (\${section.settlement})\`;
+          
+          if (anomalies && anomalies.length > 0) {
+            const anomaly = anomalies[0]; // Just show the first one for simplicity
+            document.getElementById('sec-severity').textContent = anomaly.severity;
+            document.getElementById('sec-reasoning').textContent = anomaly.ai_reasoning;
+            
+            if (transcript) {
+              try {
+                const content = JSON.parse(transcript.content_json);
+                const text = content.map(c => \`[\${c.start}s - \${c.end}s] \${c.text}\`).join('\\n');
+                const highlighted = text.replace(
+                  anomaly.trigger_quote, 
+                  \`<span class="highlight-trigger">\${anomaly.trigger_quote}</span>\`
+                );
+                document.getElementById('sec-transcript').innerHTML = highlighted;
+              } catch (e) {
+                document.getElementById('sec-transcript').textContent = transcript.content_json;
+              }
+            } else {
+              document.getElementById('sec-transcript').textContent = 'No transcript available.';
+            }
+          } else {
+            document.getElementById('sec-severity').textContent = 'CLEAN';
+            document.getElementById('sec-severity').style.color = 'var(--color-success)';
+            document.getElementById('sec-reasoning').textContent = 'No anomalies detected.';
+            if (transcript) {
+              try {
+                const content = JSON.parse(transcript.content_json);
+                document.getElementById('sec-transcript').textContent = content.map(c => \`[\${c.start}s - \${c.end}s] \${c.text}\`).join('\\n');
+              } catch (e) {
+                document.getElementById('sec-transcript').textContent = transcript.content_json;
+              }
+            } else {
+              document.getElementById('sec-transcript').textContent = 'No transcript available.';
+            }
+          }
+        })
+        .catch(err => {
+          document.getElementById('sec-id').textContent = 'Error loading section';
+          console.error(err);
+        });
+    }
+  </script>
+</body>
+</html>

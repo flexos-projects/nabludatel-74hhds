@@ -1,0 +1,35 @@
+{
+  "buildId": "001-mvp",
+  "status": "done",
+  "tasks": [
+    {
+      "id": "task-setup",
+      "title": "Project Setup",
+      "status": "done",
+      "dependsOn": [],
+      "files": ["package.json", "tsconfig.json", "server/index.ts", "server/db.ts"]
+    },
+    {
+      "id": "task-orchestrator",
+      "title": "Orchestrator Pipeline",
+      "status": "done",
+      "dependsOn": ["task-setup"],
+      "files": ["server/orchestrator.ts"]
+    },
+    {
+      "id": "task-api",
+      "title": "Express API",
+      "status": "done",
+      "dependsOn": ["task-setup"],
+      "files": ["server/api.ts"]
+    },
+    {
+      "id": "task-frontend",
+      "title": "Frontend Dashboard",
+      "status": "done",
+      "dependsOn": ["task-api"],
+      "files": ["public/index.html", "public/coverage.html", "public/landing.html", "public/section.html", "public/shared/tokens.css", "public/shared/components.css"]
+    }
+  ],
+  "createdAt": "2026-04-20T12:00:00Z"
+}
