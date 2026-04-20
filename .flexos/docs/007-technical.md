@@ -24,17 +24,18 @@ Last regenerated: 2026-04-20T12:00:00Z
 ## Stack
 | Layer | Choice | Rationale |
 |-------|--------|-----------|
-| **Orchestrator** | Node.js (TypeScript) | Excellent async handling for managing concurrent downloads, child processes, and API calls. |
-| **Database** | SQLite (via `better-sqlite3`) | Zero-config, local, bulletproof state management. Synchronous writes prevent race conditions in the queue. |
-| **Transcription** | `faster-whisper` (Python CLI) | Free, local, private voice-to-text. Preserves budget for the reasoning layer. Called as a child process by Node. |
-| **Analysis** | Anthropic API (Claude 3.5 Sonnet) | Deep reasoning capabilities. We will use the official SDK rather than the CLI for better JSON parsing and error handling in Node. |
+| **Orchestrator** | Node.js (TypeScript) | Excellent async handling for managing concurrent downloads, child processes, and API calls. See `specs/009-feature-primary_orchestrator.md`. |
+| **Database** | SQLite (via `better-sqlite3`) | Zero-config, local, bulletproof state management. Configured with WAL mode for concurrency. |
+| **Audio Extraction** | `ffmpeg` (via `fluent-ffmpeg`) | Extracts 16kHz mono audio from massive video files to save Whisper processing overhead. |
+| **Transcription** | `faster-whisper` (Python CLI) | Free, local, private voice-to-text. Uses Voice Activity Detection (VAD) to skip silences. Called as a child process by Node. See `specs/008-feature-primary_audio-pipeline.md`. |
+| **Analysis** | Anthropic API (Claude 3.5 Sonnet) | Deep reasoning capabilities. Uses the official SDK with Prompt Caching to reduce costs. |
 | **Local Server** | Express.js | A lightweight server running on `localhost:3000` to serve the dashboard and provide a JSON API over the SQLite DB. |
 | **Frontend** | Vanilla HTML/JS/CSS | No build step required. The dashboard is a single `index.html` file that polls the Express API. |
 
 ## Architecture
 **The Monolithic Local Pipeline**
 The system is a single Node.js application running on the user's local machine. It has two main loops running concurrently:
-1. **The Pipeline Loop:** Queries SQLite for the next pending section, downloads the video, spawns a Python child process to run `faster-whisper`, sends the transcript to Anthropic, and writes the result back to SQLite.
+1. **The Pipeline Loop:** Queries SQLite for the next pending section, streams the video download, spawns a Python child process to run `faster-whisper`, sends the transcript to Anthropic, and writes the result back to SQLite.
 2. **The Server Loop:** An Express server that exposes endpoints (e.g., `/api/stats`, `/api/anomalies`) and serves the static dashboard files.
 
 **Data Flow Diagram**
@@ -43,6 +44,7 @@ The system is a single Node.js application running on the user's local machine. 
 ## Key Configuration
 - **Concurrency:** The pipeline should process exactly ONE video at a time to avoid overwhelming the local CPU/GPU with Whisper and filling the disk with multiple 2GB video files.
 - **File Cleanup:** `fs.unlinkSync()` MUST be called in a `finally` block to guarantee video/audio files are deleted even if transcription fails.
+- **VAD Filter:** Whisper MUST be run with `vad_filter=True` to strip hours of silence from election videos and prevent hallucination loops.
 
 ## Environment Variables
 - `ANTHROPIC_API_KEY` (Server) — Required for Claude analysis.
@@ -60,8 +62,8 @@ The local Express server exposes a simple polling API for the dashboard:
 - `POST /api/anomalies/:id/review` → Updates the `review_status` of an anomaly.
 
 ## Key Integrations
-- **Anthropic API:** Called with `messages` API. System prompt instructs it to return strict JSON. Uses Prompt Caching for the large instruction set to reduce costs.
-- **evideo.bg:** Scraped via standard HTTP GET. Requires handling of potential rate limits or connection drops via exponential backoff.
+- **Anthropic API:** Called with `messages` API. System prompt instructs it to return strict JSON. Uses Prompt Caching for the large instruction set to reduce costs by 90%.
+- **evideo.bg:** Scraped via robust HTTP client (e.g. `got` or `fetch`). Streams directly to disk. Implements strict timeouts and aborts to handle government server drops.
 
 ## Security Checklist
 - **Path Traversal:** Ensure the section ID used to construct file paths is strictly sanitized (regex `^\d{9}$`).
@@ -69,7 +71,7 @@ The local Express server exposes a simple polling API for the dashboard:
 
 ## Performance Targets
 - **Transcription Speed:** Target < 15 minutes per 1 hour of audio on an M-series Mac or Nvidia GPU.
-- **Dashboard Load:** < 100ms. It's querying local SQLite.
+- **Dashboard Load:** < 100ms. It's querying local SQLite in WAL mode.
 
 ## Testing Strategy
 - **Unit Tests:** The parsing logic for the `evideo.bg` URLs and the Claude JSON response parser.
