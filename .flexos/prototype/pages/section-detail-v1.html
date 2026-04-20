@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nabludatel | Section Detail</title>
+  <link rel="stylesheet" href="../shared/tokens.css">
+  <link rel="stylesheet" href="../shared/components.css">
+</head>
+<body>
+  <div class="overlay-container">
+    <div class="slide-over dossier-panel">
+      <div class="dossier-header">
+        <span class="mono-heading" id="sec-id">SEC: Loading...</span>
+        <span class="tag-severity" id="sec-severity">...</span>
+      </div>
+      <div class="reasoning-block text-sans" id="sec-reasoning">
+        Loading reasoning...
+      </div>
+      <div class="transcript-context mono-block" id="sec-transcript" style="white-space: pre-wrap;">
+        Loading transcript...
+      </div>
+      <div class="action-bar-sticky">
+        <button class="btn-primary btn-massive" onclick="window.open('https://evideo.bg', '_blank')">Watch Video</button>
+        <button class="btn-secondary" onclick="window.location.href='dashboard-v1.html'">Mark as False Positive</button>
+        <button class="btn-secondary" onclick="window.location.href='dashboard-v1.html'">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get('id') || '152400019';
+
+    fetch('../mock-data.json')
+      .then(res => res.json())
+      .then(data => {
+        const anomaly = data.anomalies.find(a => a.section_id === id);
+        const transcript = data.transcripts.find(t => t.section_id === id);
+        
+        if (anomaly) {
+          document.getElementById('sec-id').textContent = `SEC: ${anomaly.section_id} (${anomaly.settlement})`;
+          document.getElementById('sec-severity').textContent = anomaly.severity;
+          document.getElementById('sec-reasoning').textContent = anomaly.ai_reasoning;
+        }
+
+        if (transcript && anomaly) {
+          // highlight trigger quote
+          const content = transcript.content_json.replace(
+            anomaly.trigger_quote, 
+            `<span class="highlight-trigger">${anomaly.trigger_quote}</span>`
+          );
+          document.getElementById('sec-transcript').innerHTML = content;
+        }
+      });
+  </script>
+</body>
+</html>

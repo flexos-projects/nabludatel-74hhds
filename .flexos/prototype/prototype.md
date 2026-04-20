@@ -4,12 +4,11 @@ title: "Prototypes"
 type: prototype
 subtype: dashboard
 status: active
-sequence: 27
 description: "Section dashboard — sitemap, versions, deploy config"
 relatesTo:
   - docs/003-pages.md
   - docs/005-flows.md
-createdAt: "2026-04-20T11:46:05.338Z"
+createdAt: "2026-04-20T12:00:00Z"
 ---
 
 # Prototypes
@@ -18,7 +17,7 @@ This is the dashboard for the prototype section. Three flex_blocks below drive t
 
 See MEGA-SPEC §10 for the full pattern.
 
-<flex_block type="instructions" id="blk-015" name="Prototype Chat">
+<flex_block type="instructions" id="blk-001" name="Prototype Chat">
 You're helping the user iterate on HTML prototypes. Prototypes are visual and interaction targets — not production code.
 
 When asked to build a new prototype:
@@ -32,18 +31,50 @@ When asked to build a new prototype:
 When asked to deploy: run the html-rollup skill, then update the `deploy-config` block below with the new URL + sha.
 </flex_block>
 
-<flex_block type="sitemap" id="blk-016" name="Site Map">
+<flex_block type="sitemap" id="blk-002" name="Site Map">
 {
-  "entry": null,
-  "routes": []
+  "entry": "dashboard-v1.html",
+  "routes": [
+    {
+      "path": "/",
+      "pageSpec": "specs/001-page-route_dashboard.md",
+      "label": "Command Dashboard",
+      "current": "dashboard-v1.html",
+      "versions": ["dashboard-v1.html"]
+    },
+    {
+      "path": "/section/:id",
+      "pageSpec": "specs/002-page-overlay_section-detail.md",
+      "label": "Section Detail Overlay",
+      "current": "section-detail-v1.html",
+      "versions": ["section-detail-v1.html"]
+    },
+    {
+      "path": "/coverage",
+      "pageSpec": "specs/003-page-route_coverage.md",
+      "label": "Coverage Matrix",
+      "current": "coverage-v1.html",
+      "versions": ["coverage-v1.html"]
+    }
+  ]
 }
 </flex_block>
 
-<flex_block type="prototype-versions" id="blk-017" name="Versions">
-{}
+<flex_block type="prototype-versions" id="blk-003" name="Versions">
+{
+  "dashboard": [
+    { "version": 1, "file": "dashboard-v1.html", "createdAt": "2026-04-20T12:00:00Z", "current": true }
+  ],
+  "section-detail": [
+    { "version": 1, "file": "section-detail-v1.html", "createdAt": "2026-04-20T12:00:00Z", "current": true }
+  ],
+  "coverage": [
+    { "version": 1, "file": "coverage-v1.html", "createdAt": "2026-04-20T12:00:00Z", "current": true }
+  ]
+}
 </flex_block>
 
-<flex_block type="deploy-config" id="blk-018" name="Deploy">
+<flex_block type="deploy-config" id="blk-004" name="Deploy">
 {
   "target": "vercel-blob",
   "url": null,

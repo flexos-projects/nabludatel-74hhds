@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nabludatel | Coverage Matrix</title>
+  <link rel="stylesheet" href="../shared/tokens.css">
+  <link rel="stylesheet" href="../shared/components.css">
+  <style>
+    .table-dense { width: 100%; border-collapse: collapse; }
+    .table-dense th, .table-dense td { padding: var(--space-2); border-bottom: 1px solid var(--color-border); text-align: left; }
+    .status-shape-square { display: inline-block; width: 10px; height: 10px; background: var(--color-success); }
+    .status-shape-triangle { display: inline-block; width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-bottom: 10px solid var(--color-danger); }
+    .status-shape-circle { display: inline-block; width: 10px; height: 10px; background: var(--color-warning); border-radius: 50%; }
+  </style>
+</head>
+<body>
+  <div class="app-shell theme-dark">
+    <aside class="sidebar telemetry-panel">
+      <div class="brand">
+        Nabludatel
+      </div>
+      <nav style="display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem;">
+        <a href="dashboard-v1.html" class="btn-secondary" style="text-decoration: none; text-align: center;">Dashboard</a>
+        <a href="coverage-v1.html" class="btn-primary" style="text-decoration: none; text-align: center;">Coverage</a>
+      </nav>
+    </aside>
+    <main class="fluid-width feed-container">
+      <header class="header" style="margin-bottom: 2rem;">
+        <h2>Coverage Matrix</h2>
+      </header>
+      <div class="matrix-container">
+        <table class="table-dense mono-text">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Location</th>
+              <th>Type</th>
+              <th>Status</th>
+              <th>Alerts</th>
+            </tr>
+          </thead>
+          <tbody id="matrix-body">
+            <!-- Rendered via JS -->
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    fetch('../mock-data.json')
+      .then(res => res.json())
+      .then(data => {
+        const tbody = document.getElementById('matrix-body');
+        const html = data.sections.map(s => {
+          let shape = '<span class="status-shape-circle"></span>';
+          if (s.status === 'complete') shape = '<span class="status-shape-square"></span>';
+          if (s.status === 'flagged') shape = '<span class="status-shape-triangle"></span>';
+          
+          return `
+            <tr style="cursor: pointer;" onclick="window.location.href='section-detail-v1.html?id=${s.section_id}'">
+              <td>${s.section_id}</td>
+              <td>${s.region}, ${s.municipality}, ${s.settlement}</td>
+              <td>${s.is_rural ? 'Rural' : 'Urban'}</td>
+              <td>${shape} ${s.status}</td>
+              <td>${s.alert_count}</td>
+            </tr>
+          `;
+        }).join('');
+        tbody.innerHTML = html;
+      });
+  </script>
+</body>
+</html>

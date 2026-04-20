@@ -1,16 +1,6 @@
----
-id: design-tokens
-title: "Design Tokens"
-type: design
-status: active
-sequence: 25
-createdAt: "2026-04-20T11:46:23.871Z"
-updatedAt: "2026-04-20T11:46:23.871Z"
----
-
 # Design Tokens
 
-<flex_block type="tokens" id="blk-007" name="colors-dark">
+<flex_block type="tokens" id="blk-001" name="colors-dark">
 {
   "category": "colors",
   "mode": "dark",
@@ -29,7 +19,7 @@ updatedAt: "2026-04-20T11:46:23.871Z"
 }
 </flex_block>
 
-<flex_block type="tokens" id="blk-008" name="colors-light">
+<flex_block type="tokens" id="blk-002" name="colors-light">
 {
   "category": "colors",
   "mode": "light",
@@ -48,7 +38,7 @@ updatedAt: "2026-04-20T11:46:23.871Z"
 }
 </flex_block>
 
-<flex_block type="tokens" id="blk-009" name="typography">
+<flex_block type="tokens" id="blk-003" name="typography">
 {
   "category": "typography",
   "tokens": {
@@ -59,7 +49,7 @@ updatedAt: "2026-04-20T11:46:23.871Z"
 }
 </flex_block>
 
-<flex_block type="tokens" id="blk-010" name="spacing">
+<flex_block type="tokens" id="blk-004" name="spacing">
 {
   "category": "spacing",
   "tokens": {
@@ -73,7 +63,7 @@ updatedAt: "2026-04-20T11:46:23.871Z"
 }
 </flex_block>
 
-<flex_block type="tokens" id="blk-011" name="radii">
+<flex_block type="tokens" id="blk-005" name="radii">
 {
   "category": "radii",
   "tokens": {
@@ -85,7 +75,7 @@ updatedAt: "2026-04-20T11:46:23.871Z"
 }
 </flex_block>
 
-<flex_block type="tokens" id="blk-012" name="shadows">
+<flex_block type="tokens" id="blk-006" name="shadows">
 {
   "category": "shadows",
   "tokens": {
@@ -96,7 +86,7 @@ updatedAt: "2026-04-20T11:46:23.871Z"
 }
 </flex_block>
 
-<flex_block type="tokens" id="blk-013" name="transitions">
+<flex_block type="tokens" id="blk-007" name="transitions">
 {
   "category": "transitions",
   "tokens": {

@@ -3,279 +3,71 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nabludatel | Command Center</title>
-  <style>
-    :root {
-      --color-bg: oklch(15% 0.01 250);
-      --color-surface: oklch(20% 0.015 250);
-      --color-surface-raised: oklch(25% 0.02 250);
-      --color-border: oklch(35% 0.02 250);
-      --color-text: oklch(95% 0.01 250);
-      --color-text-muted: oklch(70% 0.02 250);
-      --color-primary: oklch(75% 0.12 250);
-      --color-warning: oklch(75% 0.18 55);
-      --color-danger: oklch(65% 0.22 25);
-      --font-body: system-ui, sans-serif;
-      --font-mono: 'JetBrains Mono', ui-monospace, monospace;
-    }
-    
-    [data-theme="light"] {
-      --color-bg: oklch(98% 0.01 250);
-      --color-surface: oklch(100% 0 0);
-      --color-surface-raised: oklch(95% 0.02 250);
-      --color-border: oklch(85% 0.02 250);
-      --color-text: oklch(20% 0.02 250);
-      --color-text-muted: oklch(45% 0.02 250);
-      --color-primary: oklch(50% 0.12 250);
-      --color-warning: oklch(60% 0.18 55);
-      --color-danger: oklch(55% 0.22 25);
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    
-    body {
-      background-color: var(--color-bg);
-      color: var(--color-text);
-      font-family: var(--font-body);
-      display: flex;
-      height: 100vh;
-      overflow: hidden;
-    }
-
-    .sidebar {
-      width: 280px;
-      background-color: var(--color-surface);
-      border-right: 1px solid var(--color-border);
-      padding: 1.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-    }
-
-    .brand {
-      font-size: 1.25rem;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    
-    .status-dot {
-      width: 8px;
-      height: 8px;
-      background-color: var(--color-danger);
-      border-radius: 50%;
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0% { box-shadow: 0 0 0 0 oklch(65% 0.22 25 / 0.7); }
-      70% { box-shadow: 0 0 0 6px oklch(65% 0.22 25 / 0); }
-      100% { box-shadow: 0 0 0 0 oklch(65% 0.22 25 / 0); }
-    }
-
-    .metrics-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .metric {
-      background: var(--color-bg);
-      border: 1px solid var(--color-border);
-      padding: 1rem;
-      border-radius: 0.25rem;
-    }
-
-    .metric-label {
-      font-size: 0.75rem;
-      color: var(--color-text-muted);
-      text-transform: uppercase;
-      margin-bottom: 0.5rem;
-    }
-
-    .metric-value {
-      font-family: var(--font-mono);
-      font-size: 1.5rem;
-      font-weight: 600;
-    }
-
-    .main-content {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      padding: 2rem;
-      overflow-y: auto;
-    }
-
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 2rem;
-    }
-
-    .feed {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .alert-card {
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      border-left: 4px solid var(--color-danger);
-      border-radius: 0.25rem;
-      padding: 1.5rem;
-    }
-
-    .alert-card.warning {
-      border-left-color: var(--color-warning);
-    }
-
-    .alert-header {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 1rem;
-      font-family: var(--font-mono);
-      font-size: 0.875rem;
-      color: var(--color-text-muted);
-    }
-
-    .alert-title {
-      font-size: 1.125rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
-
-    .alert-body {
-      font-size: 0.875rem;
-      line-height: 1.5;
-      margin-bottom: 1.5rem;
-      color: var(--color-text-muted);
-    }
-
-    .transcript-snippet {
-      background: var(--color-bg);
-      padding: 1rem;
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      border-radius: 0.25rem;
-      border: 1px solid var(--color-border);
-      margin-bottom: 1.5rem;
-    }
-
-    .actions {
-      display: flex;
-      gap: 1rem;
-    }
-
-    .btn {
-      background: var(--color-surface-raised);
-      color: var(--color-text);
-      border: 1px solid var(--color-border);
-      padding: 0.5rem 1rem;
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      cursor: pointer;
-      border-radius: 0.25rem;
-      transition: all 0.2s;
-    }
-
-    .btn:hover {
-      background: var(--color-border);
-    }
-
-    .btn.primary {
-      background: var(--color-primary);
-      color: oklch(15% 0.01 250);
-      border: none;
-    }
-    
-    .theme-toggle {
-      background: none;
-      border: none;
-      color: var(--color-text-muted);
-      cursor: pointer;
-      font-family: var(--font-mono);
-    }
-  </style>
+  <title>Nabludatel | Command Dashboard</title>
+  <link rel="stylesheet" href="../shared/tokens.css">
+  <link rel="stylesheet" href="../shared/components.css">
 </head>
 <body>
-
-  <aside class="sidebar">
-    <div class="brand">
-      Nabludatel
-      <div class="status-dot"></div>
-    </div>
-
-    <div class="metrics-grid">
-      <div class="metric">
-        <div class="metric-label">Sections Queued</div>
-        <div class="metric-value">12,450</div>
+  <div class="app-shell theme-dark">
+    <aside class="sidebar telemetry-panel">
+      <div class="brand">
+        Nabludatel
+        <div class="pulse-indicator"></div>
       </div>
-      <div class="metric">
-        <div class="metric-label">Processed</div>
-        <div class="metric-value">3,421</div>
+      <div class="metrics-grid" id="telemetry-stats">
+        <!-- Rendered via JS -->
       </div>
-      <div class="metric">
-        <div class="metric-label">Critical Alerts</div>
-        <div class="metric-value" style="color: var(--color-danger)">42</div>
+    </aside>
+    <main class="fluid-width feed-container">
+      <header class="header" style="display: flex; justify-content: space-between; margin-bottom: 2rem;">
+        <h2>Anomaly Feed</h2>
+        <div>
+          <a href="coverage-v1.html" class="btn-secondary" style="text-decoration: none;">Coverage Matrix</a>
+        </div>
+      </header>
+      <div class="feed" id="anomaly-feed">
+        <!-- Rendered via JS -->
       </div>
-    </div>
-  </aside>
+    </main>
+  </div>
 
-  <main class="main-content">
-    <header class="header">
-      <h2>Anomaly Feed</h2>
-      <button class="theme-toggle" onclick="document.documentElement.dataset.theme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'">Toggle Theme</button>
-    </header>
+  <script>
+    fetch('../mock-data.json')
+      .then(res => res.json())
+      .then(data => {
+        // Render stats
+        const statsHtml = `
+          <div class="stat-block">
+            <div class="metric-label">Sections Queued</div>
+            <div class="metric-value mono-text">${data.stats.sections_queued}</div>
+          </div>
+          <div class="stat-block">
+            <div class="metric-label">Processed</div>
+            <div class="metric-value mono-text">${data.stats.processed}</div>
+          </div>
+          <div class="stat-block">
+            <div class="metric-label">Critical Alerts</div>
+            <div class="metric-value mono-text" style="color: var(--color-danger)">${data.stats.critical_alerts}</div>
+          </div>
+        `;
+        document.getElementById('telemetry-stats').innerHTML = statsHtml;
 
-    <div class="feed">
-      
-      <div class="alert-card">
-        <div class="alert-header">
-          <span>SEC: 152400019 (Pleven / Gorno Uino)</span>
-          <span>@ 01:45:22</span>
-        </div>
-        <div class="alert-title">Intimidation of SIK Member</div>
-        <div class="alert-body">
-          Claude detected hostile language and direct threats towards a commission member attempting to log a dispute regarding ballot validity.
-        </div>
-        <div class="transcript-snippet">
-          [01:45:10] Speaker A: I need to write this in the protocol, these 5 are invalid.<br>
-          [01:45:18] Speaker B: You are not writing anything. Put the pen down.<br>
-          [01:45:22] Speaker B: Put the phone away or I will break it. Just write 45.
-        </div>
-        <div class="actions">
-          <button class="btn primary">Watch @ 01:45:22</button>
-          <button class="btn">Mark Reviewed</button>
-        </div>
-      </div>
-
-      <div class="alert-card warning">
-        <div class="alert-header">
-          <span>SEC: 030600045 (Varna)</span>
-          <span>@ 03:12:05</span>
-        </div>
-        <div class="alert-title">Unexplained Counting Delay</div>
-        <div class="alert-body">
-          Transcription indicates a prolonged pause in counting while members wait for a "phone call from the boss" before sealing the bags.
-        </div>
-        <div class="transcript-snippet">
-          [03:10:00] Speaker C: Are we tying the bags now?<br>
-          [03:12:05] Speaker A: No, wait. Don't seal them yet. We have to wait for Ivan to call and confirm the numbers match.
-        </div>
-        <div class="actions">
-          <button class="btn primary">Watch @ 03:12:05</button>
-          <button class="btn">Mark Reviewed</button>
-        </div>
-      </div>
-
-    </div>
-  </main>
-
+        // Render feed
+        const feedHtml = data.anomalies.map(a => `
+          <div class="anomaly-card ${a.severity === 'warning' ? 'severity-warning' : ''}" onclick="window.location.href='section-detail-v1.html?id=${a.section_id}'" style="cursor: pointer;">
+            <div class="alert-header">
+              <span class="mono-text">SEC: ${a.section_id} (${a.settlement})</span>
+              <span class="mono-text">@ ${a.timestamp}</span>
+            </div>
+            <div class="alert-title">${a.category}</div>
+            <div class="alert-body">${a.ai_reasoning}</div>
+            <div class="transcript-snippet mono-text">
+              ${a.trigger_quote}
+            </div>
+          </div>
+        `).join('');
+        document.getElementById('anomaly-feed').innerHTML = feedHtml;
+      });
+  </script>
 </body>
 </html>

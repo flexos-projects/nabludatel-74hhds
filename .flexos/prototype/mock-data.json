@@ -1,0 +1,70 @@
+{
+  "stats": {
+    "sections_queued": 12450,
+    "processed": 3421,
+    "critical_alerts": 42,
+    "disk_space_saved": "1.2 TB"
+  },
+  "anomalies": [
+    {
+      "id": "a-001",
+      "section_id": "152400019",
+      "settlement": "Gorno Uino",
+      "severity": "critical",
+      "category": "Intimidation",
+      "timestamp": "01:45:22",
+      "trigger_quote": "Put the phone away or I will break it. Just write 45.",
+      "ai_reasoning": "Claude detected hostile language and direct threats towards a commission member attempting to log a dispute regarding ballot validity."
+    },
+    {
+      "id": "a-002",
+      "section_id": "030600045",
+      "settlement": "Varna",
+      "severity": "warning",
+      "category": "Unexplained Delay",
+      "timestamp": "03:12:05",
+      "trigger_quote": "No, wait. Don't seal them yet. We have to wait for Ivan to call and confirm the numbers match.",
+      "ai_reasoning": "Transcription indicates a prolonged pause in counting while members wait for a 'phone call from the boss' before sealing the bags."
+    }
+  ],
+  "sections": [
+    {
+      "section_id": "152400019",
+      "region": "Pleven",
+      "municipality": "Pleven",
+      "settlement": "Gorno Uino",
+      "is_rural": true,
+      "status": "flagged",
+      "alert_count": 1
+    },
+    {
+      "section_id": "030600045",
+      "region": "Varna",
+      "municipality": "Varna",
+      "settlement": "Varna",
+      "is_rural": false,
+      "status": "flagged",
+      "alert_count": 1
+    },
+    {
+      "section_id": "224600012",
+      "region": "Sofia",
+      "municipality": "Sofia",
+      "settlement": "Sofia",
+      "is_rural": false,
+      "status": "complete",
+      "alert_count": 0
+    }
+  ],
+  "processing_queue": [
+    { "section_id": "152400019", "status": "complete" },
+    { "section_id": "030600045", "status": "complete" },
+    { "section_id": "224600012", "status": "complete" }
+  ],
+  "transcripts": [
+    {
+      "section_id": "152400019",
+      "content_json": "[01:45:10] Speaker A: I need to write this in the protocol, these 5 are invalid.\\n[01:45:18] Speaker B: You are not writing anything. Put the pen down.\\n[01:45:22] Speaker B: Put the phone away or I will break it. Just write 45."
+    }
+  ]
+}
