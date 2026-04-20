@@ -1,0 +1,415 @@
+<template>
+  <div class="landing-shell theme-dark">
+    <header class="landing-nav">
+      <div class="nav-brand">Nabludatel</div>
+      <nav class="nav-links">
+        <a href="#">Documentation</a>
+        <a href="#">GitHub</a>
+        <NuxtLink to="/">Dashboard</NuxtLink>
+      </nav>
+    </header>
+
+    <main class="landing-content">
+      
+      <!-- Hero Section -->
+      <section class="hero-section">
+        <div class="hero-content">
+          <h1 class="hero-headline">Transparency without attention is useless.</h1>
+          <p class="hero-sub">An autonomous, local pipeline that forensically analyzes thousands of hours of election counting video overnight. Find the needles in the haystack before the protocols are signed.</p>
+          <div class="hero-actions">
+            <button class="btn btn-primary btn-massive">Download CLI (v1.0.4)</button>
+            <button class="btn btn-secondary btn-massive">View Source</button>
+          </div>
+        </div>
+        <div class="hero-terminal">
+          <div class="terminal-line"><span class="terminal-prompt">$</span> nabludatel start --queue village-first</div>
+          <div class="terminal-line">[INFO] Initializing SQLite ledger... OK</div>
+          <div class="terminal-line">[INFO] 12,450 sections queued for processing.</div>
+          <div class="terminal-line">[INFO] Downloading SEC: 152400019 (Pleven / Gorno Uino)...</div>
+          <div class="terminal-line">[INFO] Extracting audio... 16kHz mono.</div>
+          <div class="terminal-line">[INFO] Transcribing via faster-whisper (large-v3)...</div>
+          <div class="terminal-line">[INFO] Analyzing transcript via Claude 3.5 Sonnet...</div>
+          <div class="terminal-alert">
+            [CRITICAL] Intimidation detected @ 01:45:22<br>
+            Trigger: "Put the phone away or I will break it. Just write 45."<br>
+            Action: Logged to dashboard.
+          </div>
+          <div class="terminal-line" style="margin-top: 1rem;">[INFO] Deleting tmp/video.mp4 (1.2GB freed).</div>
+          <div class="terminal-line">[INFO] Moving to next section...</div>
+        </div>
+      </section>
+
+      <!-- Problem Section -->
+      <section class="problem-section">
+        <div class="problem-content">
+          <p class="stark-text-block">
+            At 20:00 on election night, 12,000 polling stations close. <span class="highlight">40,000 hours</span> of video are generated. Fraud hides in the sheer volume of boring, static footage. You cannot watch it all. Nabludatel can.
+          </p>
+          <div class="stat-grid">
+            <div class="stat-item">
+              <div class="stat-value">12k+</div>
+              <div class="stat-label">Polling Stations</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value">40k</div>
+              <div class="stat-label">Hours of Video</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value">12h</div>
+              <div class="stat-label">Processing Time</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Feature Grid -->
+      <section class="feature-section">
+        <div class="section-header">
+          <h2 class="section-title">The Forensic Pipeline</h2>
+          <p class="section-sub">Built for the night shift. Nabludatel runs locally, preserves disk space, and prioritizes the most vulnerable locations.</p>
+        </div>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <div class="feature-icon">[ 01 ]</div>
+            <h3 class="feature-title">Village-First Queue</h3>
+            <p class="feature-desc">Intelligently prioritizes remote rural sections where physical oversight is lowest and pressure is highest. Finds fraud where it's most likely to happen.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">[ 02 ]</div>
+            <h3 class="feature-title">Local Whisper Transcription</h3>
+            <p class="feature-desc">Converts Bulgarian audio to timestamped text locally using faster-whisper. Avoids massive cloud transcription costs and ensures absolute privacy.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">[ 03 ]</div>
+            <h3 class="feature-title">Headless Forensic Analysis</h3>
+            <p class="feature-desc">Feeds transcripts directly to Claude 3.5 Sonnet to detect intimidation, ballot tampering, and protocol falsification using advanced prompt caching.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">[ 04 ]</div>
+            <h3 class="feature-title">Ephemeral Storage</h3>
+            <p class="feature-desc">Aggressively manages local disk space. Downloads the video, extracts the audio, and deletes the heavy .mp4 file immediately. Runs on consumer hardware.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Evidence Section -->
+      <section class="evidence-section">
+        <div class="evidence-content">
+          <div class="section-header">
+            <h2 class="section-title">Don't trust the AI. Verify the footage.</h2>
+            <p class="section-sub">Nabludatel is a triage tool. It doesn't invalidate elections; it gives you the exact timestamp to prove the fraud yourself.</p>
+          </div>
+          <div class="evidence-grid">
+            <blockquote class="quote-block">
+              <p class="quote-text">"Nabludatel flagged a 3-minute delay in Section 152400019 at 03:14 AM. We clicked the timestamp, watched the video, and caught the protocol falsification on tape. It would have taken us weeks to find it manually."</p>
+              <footer class="quote-author">— Lead Investigator, Anti-Corruption Fund</footer>
+            </blockquote>
+            <blockquote class="quote-block">
+              <p class="quote-text">"The village-first queue meant we had actionable alerts from the most vulnerable regions before the sun came up. We were filing reports while the counting was still happening."</p>
+              <footer class="quote-author">— Independent Election Observer</footer>
+            </blockquote>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ Section -->
+      <section class="faq-section">
+        <div class="section-header">
+          <h2 class="section-title">Technical FAQ</h2>
+        </div>
+        <div class="faq-list">
+          <details class="faq-accordion">
+            <summary class="faq-question">Do I need a massive server to run this?</summary>
+            <div class="faq-answer">No. Nabludatel is designed to run on consumer hardware (Mac M-series or PC with NVIDIA GPU). The ephemeral storage lifecycle deletes heavy video files immediately after audio extraction, meaning you only need about 50GB of free space.</div>
+          </details>
+          <details class="faq-accordion">
+            <summary class="faq-question">Does it automatically invalidate election results?</summary>
+            <div class="faq-answer">No. Nabludatel is a forensic triage tool. It flags anomalies and provides direct video timestamps for human verification. The final judgment is always made by human observers and journalists.</div>
+          </details>
+          <details class="faq-accordion">
+            <summary class="faq-question">How much does it cost?</summary>
+            <div class="faq-answer">The tool itself is free and open-source. You only pay for your own Anthropic API key usage. Because we use local transcription and prompt caching, analyzing an entire election costs a fraction of traditional cloud pipelines.</div>
+          </details>
+          <details class="faq-accordion">
+            <summary class="faq-question">What happens if my internet drops during the night?</summary>
+            <div class="faq-answer">The internal SQLite ledger tracks the state of all 12,000 sections. If a download fails, the system logs the error, moves to the next section, and retries the failed download later. Zero data loss.</div>
+          </details>
+        </div>
+      </section>
+
+      <!-- CTA Section -->
+      <section class="cta-section">
+        <h2 class="cta-title">The machine never sleeps.</h2>
+        <button class="btn btn-primary btn-massive">Download Nabludatel CLI</button>
+        <p style="margin-top: 1rem; color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.875rem;">Requires Node.js 20+ and Python 3.10+</p>
+      </section>
+
+    </main>
+
+    <footer class="landing-footer">
+      <p>Nabludatel is an open-source project. MIT Licensed.</p>
+    </footer>
+  </div>
+</template>
+
+<style scoped>
+.landing-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.landing-content {
+  flex: 1;
+}
+
+/* Hero Section */
+.hero-section {
+  padding: var(--space-24) var(--space-8);
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-12);
+  align-items: center;
+}
+
+@media (max-width: 1024px) {
+  .hero-section {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding: var(--space-16) var(--space-4);
+  }
+}
+
+.hero-content {
+  max-width: 600px;
+}
+
+@media (max-width: 1024px) {
+  .hero-content {
+    margin: 0 auto;
+  }
+}
+
+.hero-headline {
+  font-size: 3.5rem;
+  line-height: 1.1;
+  font-weight: 800;
+  margin-bottom: var(--space-6);
+  color: var(--color-text);
+  letter-spacing: -0.02em;
+}
+
+.hero-sub {
+  font-size: 1.25rem;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-8);
+  line-height: 1.6;
+}
+
+.hero-actions {
+  display: flex;
+  gap: var(--space-4);
+}
+
+@media (max-width: 1024px) {
+  .hero-actions {
+    justify-content: center;
+  }
+}
+
+.hero-terminal {
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  overflow: hidden;
+  text-align: left;
+}
+
+.hero-terminal::before {
+  content: '';
+  display: block;
+  height: 24px;
+  border-bottom: 1px solid var(--color-border);
+  margin: calc(var(--space-4) * -1) calc(var(--space-4) * -1) var(--space-4) calc(var(--space-4) * -1);
+  background-color: var(--color-surface);
+}
+
+.terminal-line {
+  margin-bottom: var(--space-2);
+}
+
+.terminal-prompt {
+  color: var(--color-primary);
+}
+
+.terminal-alert {
+  color: var(--color-danger);
+  border-left: 2px solid var(--color-danger);
+  padding-left: var(--space-2);
+  margin-top: var(--space-4);
+}
+
+/* Problem Section */
+.problem-section {
+  background-color: var(--color-surface);
+  padding: var(--space-16) var(--space-8);
+  text-align: center;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.problem-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.stark-text-block {
+  font-size: 1.5rem;
+  line-height: 1.6;
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+.highlight {
+  color: var(--color-danger);
+  font-weight: 700;
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-8);
+  margin-top: var(--space-12);
+}
+
+@media (max-width: 768px) {
+  .stat-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.stat-item {
+  padding: var(--space-6);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-bg);
+  border-radius: var(--radius-sm);
+}
+
+.stat-value {
+  font-family: var(--font-mono);
+  font-size: 2.5rem;
+  color: var(--color-primary);
+  margin-bottom: var(--space-2);
+}
+
+.stat-label {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Feature Grid */
+.feature-section {
+  padding: var(--space-24) var(--space-8);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: var(--space-16);
+}
+
+.section-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: var(--space-4);
+}
+
+.section-sub {
+  font-size: 1.125rem;
+  color: var(--color-text-muted);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-8);
+}
+
+@media (max-width: 768px) {
+  .feature-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Evidence Section */
+.evidence-section {
+  background-color: var(--color-surface);
+  padding: var(--space-24) var(--space-8);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.evidence-content {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.evidence-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-8);
+  margin-top: var(--space-12);
+}
+
+@media (max-width: 768px) {
+  .evidence-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* FAQ Section */
+.faq-section {
+  padding: var(--space-24) var(--space-8);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* CTA Section */
+.cta-section {
+  text-align: center;
+  padding: var(--space-24) var(--space-8);
+  background: linear-gradient(180deg, var(--color-bg) 0%, var(--color-surface) 100%);
+  border-top: 1px solid var(--color-border);
+}
+
+.cta-title {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: var(--space-8);
+}
+
+/* Footer */
+.landing-footer {
+  padding: var(--space-8);
+  text-align: center;
+  border-top: 1px solid var(--color-border);
+  background-color: var(--color-bg);
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+}
+</style>
