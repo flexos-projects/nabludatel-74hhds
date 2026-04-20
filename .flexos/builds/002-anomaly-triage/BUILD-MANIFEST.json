@@ -1,0 +1,28 @@
+{
+  "buildId": "002-anomaly-triage",
+  "status": "pending",
+  "tasks": [
+    {
+      "id": "task-landing-page",
+      "title": "Public Landing Page",
+      "status": "pending",
+      "dependsOn": [],
+      "files": ["public/landing.html"]
+    },
+    {
+      "id": "task-dashboard-api",
+      "title": "Dashboard API Endpoints",
+      "status": "pending",
+      "dependsOn": [],
+      "files": ["server/api.ts"]
+    },
+    {
+      "id": "task-dashboard-ui",
+      "title": "Triage Dashboard UI",
+      "status": "pending",
+      "dependsOn": ["task-dashboard-api"],
+      "files": ["public/index.html"]
+    }
+  ],
+  "createdAt": "2026-04-20T12:00:00Z"
+}

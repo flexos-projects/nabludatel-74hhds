@@ -18,12 +18,12 @@
       "data over narrative"
     ]
   },
-  "status": "prototyped",
+  "status": "building",
   "level": 3,
   "createdAt": "2026-04-20T11:46:05.338Z",
   "version": "2.0",
   "counters": {
-    "sequence": 21,
+    "sequence": 22,
     "block": 100
   }
 }
