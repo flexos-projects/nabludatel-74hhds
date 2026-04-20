@@ -53,7 +53,7 @@ const sections = ref([])
 
 onMounted(async () => {
   try {
-    const res = await fetch('/api/stats').catch(() => null);
+    const res = await fetch('/api/sections').catch(() => null);
     if (res && res.ok) {
       const data = await res.json();
       sections.value = data.sections || [];

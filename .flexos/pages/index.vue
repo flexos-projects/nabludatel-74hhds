@@ -131,15 +131,22 @@ const toastMessage = ref('')
 
 onMounted(async () => {
   try {
-    // In a real Nuxt app, this would be an API call to /api/stats and /api/anomalies
-    // For now, we'll fetch from the prototype mock data or use hardcoded if not available
-    const res = await fetch('/api/stats').catch(() => null);
-    if (res && res.ok) {
-      const data = await res.json();
+    const [statsRes, anomaliesRes] = await Promise.all([
+      fetch('/api/stats').catch(() => null),
+      fetch('/api/anomalies').catch(() => null)
+    ]);
+
+    if (statsRes && statsRes.ok) {
+      const data = await statsRes.json();
       stats.value = data.stats;
+    }
+
+    if (anomaliesRes && anomaliesRes.ok) {
+      const data = await anomaliesRes.json();
       anomalies.value = data.anomalies;
-      transcripts.value = data.transcripts;
-    } else {
+    }
+
+    if (!stats.value || !anomalies.value.length) {
       // Fallback mock data
       stats.value = {
         sections_queued: 12450,
@@ -169,20 +176,38 @@ onMounted(async () => {
           ai_reasoning: "Transcription indicates a prolonged pause in counting while members wait for a 'phone call from the boss' before sealing the bags."
         }
       ]
-      transcripts.value = [
-        {
-          section_id: "152400019",
-          content_json: "[01:45:10] Speaker A: I need to write this in the protocol, these 5 are invalid.\\n[01:45:18] Speaker B: You are not writing anything. Put the pen down.\\n[01:45:22] Speaker B: Put the phone away or I will break it. Just write 45."
-        }
-      ]
     }
   } catch (e) {
     console.error("Failed to load data", e)
   }
 })
 
-const openOverlay = (anomaly) => {
+const openOverlay = async (anomaly) => {
   selectedAnomaly.value = anomaly
+  
+  // Fetch transcript for this specific anomaly's section
+  try {
+    const res = await fetch(`/api/sections/${anomaly.section_id}`).catch(() => null);
+    if (res && res.ok) {
+      const data = await res.json();
+      if (data.transcript) {
+        const existingIndex = transcripts.value.findIndex(t => t.section_id === data.transcript.section_id);
+        if (existingIndex >= 0) {
+          transcripts.value[existingIndex] = data.transcript;
+        } else {
+          transcripts.value.push(data.transcript);
+        }
+      }
+    } else {
+      // Fallback
+      transcripts.value.push({
+        section_id: "152400019",
+        content_json: "[01:45:10] Speaker A: I need to write this in the protocol, these 5 are invalid.\\n[01:45:18] Speaker B: You are not writing anything. Put the pen down.\\n[01:45:22] Speaker B: Put the phone away or I will break it. Just write 45."
+      });
+    }
+  } catch (e) {
+    console.error(e);
+  }
 }
 
 const closeOverlay = () => {
@@ -210,7 +235,7 @@ const showToast = (msg) => {
   setTimeout(() => { toastMessage.value = '' }, 3000)
 }
 
-const markStatus = (status) => {
+const markStatus = async (status) => {
   if (status === 'verified') {
     showToast('Anomaly verified. Logged for export.')
   } else {
@@ -220,6 +245,18 @@ const markStatus = (status) => {
       stats.value.critical_alerts--
     }
   }
+  
+  // Update in DB
+  try {
+    await fetch(`/api/anomalies/${selectedAnomaly.value.id}/review`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status })
+    });
+  } catch (e) {
+    console.error(e);
+  }
+
   closeOverlay()
 }
 </script>
